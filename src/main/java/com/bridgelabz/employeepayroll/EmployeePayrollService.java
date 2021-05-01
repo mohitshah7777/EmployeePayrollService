@@ -39,6 +39,12 @@ public class EmployeePayrollService {
         return employeePayrollList.size();
     }
 
+    //UC5 Ability for Employee Payroll Service to print the Employee Payrolls
+    public void printData(IOService ioService) {
+        if (ioService.equals(IOService.FILE_IO))
+            new EmployeePayrollFileIOService().printData();
+    }
+
     public long countEntries(IOService ioService) {
         if (ioService.equals(IOService.FILE_IO))
             return new EmployeePayrollFileIOService().countEntries();

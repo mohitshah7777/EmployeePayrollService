@@ -19,6 +19,7 @@ public class EmployeePayrollServiceTest {
         EmployeePayrollService employeePayrollService;
         employeePayrollService = new EmployeePayrollService(Arrays.asList(employeeData));
         employeePayrollService.writeEmployeePayrollData(FILE_IO);
+        employeePayrollService.printData(FILE_IO);          //UC5 Ability for Employee Payroll Service to print the Employee Payrolls
         long entries = employeePayrollService.countEntries(FILE_IO);
         Assert.assertEquals(3,entries);
     }
