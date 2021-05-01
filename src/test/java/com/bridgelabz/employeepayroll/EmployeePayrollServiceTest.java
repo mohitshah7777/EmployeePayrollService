@@ -1,0 +1,25 @@
+package com.bridgelabz.employeepayroll;
+
+import org.junit.Assert;
+import org.junit.Test;
+import java.util.Arrays;
+
+import static com.bridgelabz.employeepayroll.EmployeePayrollService.IOService.FILE_IO;
+public class EmployeePayrollServiceTest {
+
+    //UC4 Create an Employee Payroll Service to store Employee Payroll into a File
+    @Test
+    public void given3EmployeeWhenWrittenToFile_shouldMatchEmployeeEntries() {
+        EmployeePayrollData[] employeeData = {
+                new EmployeePayrollData(1,"Jeff Bezos", 100000.0),
+                new EmployeePayrollData(2,"Bill Gates",200000.0),
+                new EmployeePayrollData(3,"Mark Zuckerberg",300000.0)
+        };
+
+        EmployeePayrollService employeePayrollService;
+        employeePayrollService = new EmployeePayrollService(Arrays.asList(employeeData));
+        employeePayrollService.writeEmployeePayrollData(FILE_IO);
+        long entries = employeePayrollService.countEntries(FILE_IO);
+        Assert.assertEquals(3,entries);
+    }
+}
