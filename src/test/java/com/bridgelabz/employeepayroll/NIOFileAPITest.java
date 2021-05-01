@@ -44,4 +44,11 @@ public class NIOFileAPITest {
                                                    .forEach(System.out::println);
     }
 
+    //UC3 Create a Watch service to watch particular directory, files and sub directories
+    @Test
+    public void givenDirectoryWhenWatched_ListsAllTheActivities() throws IOException {
+        Path dir = Paths.get(HOME+ "/"+PLAY_WITH_NIO);
+        Files.list(dir).filter(Files::isRegularFile).forEach(System.out::println);
+        new JavaWatcherServiceExample(dir).processEvents();
+    }
 }
