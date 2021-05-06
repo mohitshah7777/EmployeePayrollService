@@ -26,10 +26,23 @@ public class EmployeePayrollServiceTest {
         Assert.assertEquals(3,entries);
     }
 
+    //JDBC UC-2
     @Test
     public void givenEmployeePayrollInDB_whenRetrieved_shouldMatchEmployeeCount(){
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
         List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollDataDB(DB_IO);
         Assert.assertEquals(3,employeePayrollData.size());
     }
+
+    //JDBC UC-3
+    @Test
+    public void givenNewSalaryForEmployee_WhenUpdated_shouldSyncDB(){
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollDataDB(DB_IO);
+        employeePayrollService.updateEmployeeSalary("Terisa",3000000);
+        boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Terisa");
+        Assert.assertTrue(result);
+
+    }
+
 }

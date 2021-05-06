@@ -11,18 +11,44 @@ public class EmployeePayrollService {
     }
 
     private List<EmployeePayrollData> employeePayrollList;
+    private EmployeePayrollDBService employeePayrollDBService;
 
     public EmployeePayrollService(List<EmployeePayrollData> employeePayrollList) {
+        this();
         this.employeePayrollList = employeePayrollList;
     }
 
-    public EmployeePayrollService(){ }
+    public EmployeePayrollService(){
+        employeePayrollDBService = EmployeePayrollDBService.getInstance();
+    }
 
     //JDBC_UC-2
     public List<EmployeePayrollData> readEmployeePayrollDataDB(IOService ioService){
         if(ioService.equals(IOService.DB_IO))
-            this.employeePayrollList = new EmployeePayrollDBService().readData();
+            this.employeePayrollList = employeePayrollDBService.readData();
         return this.employeePayrollList;
+    }
+
+    //JDBC UC -3
+    public void updateEmployeeSalary(String name, double salary) {
+        int result = employeePayrollDBService.updateEmployeeData(name,salary);
+        if(result == 0)
+            return;
+            EmployeePayrollData employeePayrollData = this.getEmployeePayrollData(name);
+        if(employeePayrollData != null)
+            employeePayrollData.salary = salary;
+    }
+
+    private EmployeePayrollData getEmployeePayrollData(String name) {
+        return this.employeePayrollList.stream()
+                    .filter(employeePayrollDataItem -> employeePayrollDataItem.name.equals(name))
+                    .findFirst()
+                    .orElse(null);
+    }
+
+    public boolean checkEmployeePayrollInSyncWithDB(String name) {
+        List<EmployeePayrollData> employeePayrollDataList = employeePayrollDBService.getEmployeePayrollData(name);
+        return employeePayrollDataList.get(0).equals(getEmployeePayrollData(name));
     }
 
     public void readEmployeePayrollData(Scanner consoleInputReader) {
