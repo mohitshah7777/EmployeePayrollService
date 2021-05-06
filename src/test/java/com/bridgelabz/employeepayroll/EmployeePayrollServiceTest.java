@@ -3,9 +3,10 @@ package com.bridgelabz.employeepayroll;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.Arrays;
+import java.util.List;
 
+import static com.bridgelabz.employeepayroll.EmployeePayrollService.IOService.DB_IO;
 import static com.bridgelabz.employeepayroll.EmployeePayrollService.IOService.FILE_IO;
-
 public class EmployeePayrollServiceTest {
 
     //UC4 Create an Employee Payroll Service to store Employee Payroll into a File
@@ -23,5 +24,12 @@ public class EmployeePayrollServiceTest {
         employeePayrollService.printData(FILE_IO);          //UC5 Ability for Employee Payroll Service to print the Employee Payrolls
         long entries = employeePayrollService.countEntries(FILE_IO);
         Assert.assertEquals(3,entries);
+    }
+
+    @Test
+    public void givenEmployeePayrollInDB_whenRetrieved_shouldMatchEmployeeCount(){
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollDataDB(DB_IO);
+        Assert.assertEquals(3,employeePayrollData.size());
     }
 }

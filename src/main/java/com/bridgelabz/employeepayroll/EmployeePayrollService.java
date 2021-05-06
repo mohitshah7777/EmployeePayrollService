@@ -16,6 +16,15 @@ public class EmployeePayrollService {
         this.employeePayrollList = employeePayrollList;
     }
 
+    public EmployeePayrollService(){ }
+
+    //JDBC_UC-2
+    public List<EmployeePayrollData> readEmployeePayrollDataDB(IOService ioService){
+        if(ioService.equals(IOService.DB_IO))
+            this.employeePayrollList = new EmployeePayrollDBService().readData();
+        return this.employeePayrollList;
+    }
+
     public void readEmployeePayrollData(Scanner consoleInputReader) {
         System.out.println("Enter Employee ID");
         int id = consoleInputReader.nextInt();
