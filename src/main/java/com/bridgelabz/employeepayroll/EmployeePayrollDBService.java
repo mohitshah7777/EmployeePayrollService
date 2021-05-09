@@ -8,6 +8,16 @@ import java.util.List;
 public class EmployeePayrollDBService {
 
     private PreparedStatement employeePayrollDataStatement;
+    private static EmployeePayrollDBService employeePayrollDBService;
+    private EmployeePayrollDBService(){
+    }
+
+    //JDBC Refactor UC-4
+    public static EmployeePayrollDBService getInstance(){
+        if(employeePayrollDBService == null)
+            employeePayrollDBService = new EmployeePayrollDBService();
+        return employeePayrollDBService;
+    }
 
     private Connection getConnection() throws SQLException {
         String jdbcURL = "jdbc:mysql://localhost:3306/payroll_service?useSSL=false";
