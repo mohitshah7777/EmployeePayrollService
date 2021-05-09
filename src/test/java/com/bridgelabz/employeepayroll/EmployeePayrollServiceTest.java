@@ -87,9 +87,9 @@ public class EmployeePayrollServiceTest {
         Assert.assertTrue(countSalaryByGender.get("M").equals(2) && countSalaryByGender.get("F").equals(1));
     }
 
-    //JDBC UC-7
+    //JDBC UC-8
     @Test
-    public void givenNewEmployee_whenAdded_shouldSyncWithDB(){
+    public void givenNewEmployee_whenAdded_shouldAddPayrollDetailsAndSyncWithDB(){
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
         employeePayrollService.readEmployeePayrollDataDB(DB_IO);
         employeePayrollService.readEmployeePayrollData(DB_IO);
