@@ -8,15 +8,6 @@ import java.util.List;
 public class EmployeePayrollDBService {
 
     private PreparedStatement employeePayrollDataStatement;
-    private static EmployeePayrollDBService employeePayrollDBService;
-    private EmployeePayrollDBService(){
-    }
-
-    public static EmployeePayrollDBService getInstance(){
-        if(employeePayrollDBService == null)
-            employeePayrollDBService = new EmployeePayrollDBService();
-        return employeePayrollDBService;
-    }
 
     private Connection getConnection() throws SQLException {
         String jdbcURL = "jdbc:mysql://localhost:3306/payroll_service?useSSL=false";
@@ -34,8 +25,8 @@ public class EmployeePayrollDBService {
         List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
         try {
             Connection connection = this.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
             employeePayrollList = this.getEmployeePayrollData(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,10 +39,10 @@ public class EmployeePayrollDBService {
     }
 
     private int updateEmployeeDataUsingPreparedStatement(String name, double salary) {
-        String sql = String.format("UPDATE payroll_table SET salary = %.2f WHERE name = '%s'",salary,name);
+        String sql = String.format("UPDATE payroll_table SET salary = %.2f WHERE name = '%s';",salary,name);
         try(Connection connection = this.getConnection()){
-            Statement statement = connection.createStatement();
-            return  statement.executeUpdate(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
+            return statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
         }
