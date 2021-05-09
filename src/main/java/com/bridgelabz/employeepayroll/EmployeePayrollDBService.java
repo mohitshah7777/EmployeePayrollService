@@ -229,19 +229,18 @@ public class EmployeePayrollDBService {
             e.printStackTrace();
         }
         try(Statement statement = connection.createStatement()){
-            String sql = String.format("INSERT INTO payroll_table ( name,gender,salary,start ) VALUES ('%s','%s','%s','%s')",name,gender,salary,Date.valueOf(startDate));
+            String sql = String.format("INSERT INTO payroll_table (name,gender,salary,start) VALUES ('%s','%s','%s','%s')",name,gender,salary,Date.valueOf(startDate));
             int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
             if(rowAffected == 1) {
                 ResultSet resultSet = statement.getGeneratedKeys();
                 if (resultSet.next())
                     employeeID = resultSet.getInt(1);
             }
-            employeePayrollData = new EmployeePayrollData(employeeID,name,salary,startDate);
         } catch (SQLException e){
             e.printStackTrace();
         }
         try(Statement statement = connection.createStatement()) {
-            double deductions = salary = 0.2;
+            double deductions = salary * 0.2;
             double taxablePay = salary-deductions;
             double tax = taxablePay * 0.1;
             double netPay = salary - tax;
