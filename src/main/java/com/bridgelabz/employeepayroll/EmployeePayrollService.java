@@ -8,6 +8,11 @@ import java.util.Scanner;
 
 public class EmployeePayrollService {
 
+    //JDBC UC-7
+    public void addEmployeeToPayroll(String name, String gender, double salary, LocalDate startDate) {
+        employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name,gender,salary,startDate));
+    }
+
     public enum IOService {
         CONSOLE_IO, FILE_IO,DB_IO
     }
