@@ -19,7 +19,7 @@ public class EmployeePayrollService {
     }
 
     public EmployeePayrollService(){
-        employeePayrollDBService = EmployeePayrollDBService.getInstance();
+        employeePayrollDBService = new EmployeePayrollDBService();
     }
 
     //JDBC_UC-2

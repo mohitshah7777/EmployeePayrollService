@@ -38,11 +38,19 @@ public class EmployeePayrollServiceTest {
     @Test
     public void givenNewSalaryForEmployee_WhenUpdated_shouldSyncDB(){
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollDataDB(DB_IO);
+        employeePayrollService.readEmployeePayrollDataDB(DB_IO);
         employeePayrollService.updateEmployeeSalary("Terisa",3000000);
         boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Terisa");
         Assert.assertTrue(result);
-
     }
 
+    //JDBC UC-4
+    @Test
+    public void givenNewSalaryForEmployee_WhenUpdatedUsingPreparedStatement_shouldSyncDB(){
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        employeePayrollService.readEmployeePayrollDataDB(DB_IO);
+        employeePayrollService.updateEmployeeSalary("Terisa",3000000);
+        boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Terisa");
+        Assert.assertTrue(result);
+    }
 }
